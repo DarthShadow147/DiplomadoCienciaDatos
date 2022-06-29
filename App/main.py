@@ -67,12 +67,28 @@ data['price_tier'] = data['price'].apply(lambda x: 'Primer cuartil' if x <= 3219
 
 data['price/sqft'] = data['price']/data['sqft_living']
 
+st.markdown("""
+Las casas han sido divididas en cuatro grupos de igual tamaño, basadas en su precio. 
+-  El Primer Cuartil contendrá información de las propiedades que cuestan menos de \$321.950 
+-  El Segundo Cuartil contendrá información de las propiedades que cuestan entre \$321.950 y \$450.000
+-  El Tercer Cuartil contendrá información de las propiedades que cuestan entre \$450.000 y \$645.000
+-  El Cuarto Cuartil contendrá información de las propiedades que cuestan más de \$645.000
+    """)
+
 tier = st.multiselect(
      'Cuartil de precios',
     list(data['price_tier'].unique()),
     list(data['price_tier'].unique()))
 ### fin de precios de casas
 
+
+###ESTADISTICAS GENERALES
+# st.write('ESTADISTICAS GENERALES')
+# col1, col2, col3 = st.columns(3)
+# #col1.metric("Número total de casas", data.shape[0],str(100*round(data.shape[0]/data_ref.shape[0],4)))
+# col1.metric("No. Casas", data.shape[0],str(100*round(data.shape[0]/data_ref.shape[0],4))+'% de las casas disponibles',delta_color="off")
+# col2.metric("Media de precios de las casas", np.round(np.mean(data['price']), 3))
+###
 
 ### Filtros en el sidebar
 ##Codigo postal
@@ -149,5 +165,3 @@ if data['condition'].min() < data['condition'].max():
 else:
     st.markdown("""El filtro **Condición** no es aplicable para la selección actual de valores""")
 ### Fin filtros en sidebar
-
-
