@@ -207,19 +207,62 @@ def map_density(data, url):
 
     return None
 
+def attributes_distribution(data):
+    st.sidebar.title( 'Atributos')
+    st.title( 'Atributos de la casa')
+
+    ##Filtros
+    f_bedrooms = st.sidebar.selectbox('Número máximo de habitaciones',
+                                  sorted(set(data['bedrooms'].unique())))
+
+    f_bathrooms = st.sidebar.selectbox('Número máximo de baños',
+                                   sorted(set(data['bathrooms'].unique())))
+
+
+    c1, c2 = st.columns(2)
+
+    # House per bedrooms
+    c1.header('Casas por habitacion')
+    df = data[data['bedrooms'] < f_bedrooms]
+    fig = px.histogram(df, x='bedrooms', nbins=19)
+    c1.plotly_chart(fig, use_container_width=True)
+
+    # House per bathrooms
+    c2.header('Casas por baño')
+    df = data[data['bathrooms'] < f_bathrooms]
+    fig = px.histogram(df, x='bathrooms', nbins=50)
+    c2.plotly_chart(fig, use_container_width=True)
+
+    #filters
+    f_floors = st.sidebar.selectbox('Número máximo de pisos',
+                                sorted(set(data['floors'].unique())))
+    
+    
+    # House per floors
+    st.header('Casas por No. de pisos')
+    df = data[data['floors'] < f_floors]
+
+    #plot
+    fig = px.histogram(df, x='floors', nbins=50)
+    st.plotly_chart(fig, use_container_width=True)
+    return None
+
 ### Fin Parametros de busqueda
 
 ### Llamado de Metodos
-path = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/kc_house_data.csv'
-url = 'https://opendata.arcgis.com/datasets/83fc2e72903343aabff6de8cb445b81c_2.geojson'
-data = get_data(path)
+if __name__ == '__main__':
+    path = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/kc_house_data.csv'
+    url = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/KingCountry.geojson'
+    data = get_data(path)
 
 ## Parametros
-data = set_feature(data)
+    data = set_feature(data)
 ## 
-slide_data(data)
+    slide_data(data)
 ## 
-comercial_data(data)
+    comercial_data(data)
 ##
-map_density(data, url)
+    map_density(data, url)
+##
+    attributes_distribution(data)
 ### Fin de Llamado de Metodos
