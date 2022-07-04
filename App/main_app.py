@@ -31,6 +31,12 @@ def get_data(path):
     data = pd.read_csv(path)
 
     return data
+
+@st.cache(allow_output_mutation=True)
+def get_geofile(url):
+    geofile = geopandas.read_file(url)
+
+    return geofile
 ### Fin Dataset
 
 ### Inicio Columna Nueva 
