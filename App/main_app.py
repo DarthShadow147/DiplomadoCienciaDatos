@@ -187,24 +187,20 @@ def map_density(data, url):
         folium_static(density_map)                                                    
 ########################################################################################################################################################
     col2.header('Densidad de Precio')
-
-    df = data[['price', 'zipcode']].groupby('zipcode').mean().reset_index()
-    df.columns = ['ZIP', 'PRICE']
-
-    url = url[url['ZIP'].isin(df['ZIP'].tolist())]
+    df = data[['price','zipcode']].groupby('zipcode').mean().reset_index()
+    #custom_scale = (data_aux['price'].quantile((0,0.2,0.4,0.6,0.8,1))).tolist()
 
     region_price_map = folium.Map(location=[data['lat'].mean(),
                                         data['long'].mean()],
                                         default_zoom_start=15)
 
-    region_price_map.choropleth(data =df,
-                            geo_data = url,
-                            columns=['ZIP', 'PRICE'],
-                            key_on = 'feature.properties.ZIP',
-                            fill_color = 'YlOrRd',
-                            fill_opacity = 0.7,
-                            line_opacity = 0.2,
-                            legend_name = 'AVG PRICE')
+    folium.Choropleth(geo_data = url, 
+                    data = df,
+                    key_on = 'feature.properties.ZIPCODE',
+                    columns = ['zipcode', 'price'],
+                    fill_color = 'YlOrRd',
+                    highlight = True).add_to(region_price_map)
+    
     
     with col2:
         folium_static(region_price_map)
