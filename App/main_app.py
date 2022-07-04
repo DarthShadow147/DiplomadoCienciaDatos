@@ -1,6 +1,7 @@
 import json
 from pickle import NONE
 import folium
+import geopandas
 import numpy as np
 import pandas as pd
 import seaborn as sns
