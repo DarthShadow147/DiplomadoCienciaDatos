@@ -194,7 +194,7 @@ def map_density(data, geofile):
         folium_static(density_map)                                                    
 ########################################################################################################################################################
     col2.header('Densidad de Precio')
-    df = data[['price','zipcode']].groupby('zipcode').mean().reset_index()
+    df = data[['price', 'zipcode']].groupby('zipcode').mean().reset_index()
     df.columns = ['ZIP', 'PRICE']
 
     geofile = geofile[geofile['ZIP'].isin(df['ZIP'].tolist())]
@@ -203,14 +203,14 @@ def map_density(data, geofile):
                        data['long'].mean()],
                        default_zoom_start=15)
 
-    folium.Choropleth(data = df,
-                      geo_data = geofile,
-                      columns=['ZIP', 'PRICE'],
-                      key_on = 'feature.properties.ZIP',
-                      fill_color = 'YlOrRd',
-                      fill_opacity = 0.7,
-                      line_opacity = 0.2,
-                      legend_name = 'AVG PRICE')
+    region_price_map.choropleth(data =df,
+                                geo_data = geofile,
+                                columns=['ZIP', 'PRICE'],
+                                key_on = 'feature.properties.ZIP',
+                                fill_color = 'YlOrRd',
+                                fill_opacity = 0.7,
+                                line_opacity = 0.2,
+                                legend_name = 'AVG PRICE')
     
     with col2:
         folium_static(region_price_map)
