@@ -265,6 +265,7 @@ mediana = pd.DataFrame(att_num.apply(np.median))
 std = pd.DataFrame(att_num.apply(np.std))
 maximo = pd.DataFrame(att_num.apply(np.max))
 minimo = pd.DataFrame(att_num.apply(np.min))
+
 df_EDA = pd.concat([minimo,media,mediana,maximo,std], axis = 1)
 df_EDA.columns = ['Mínimo','Media','Mediana','Máximo','std']
 st.header('Datos descriptivos')
