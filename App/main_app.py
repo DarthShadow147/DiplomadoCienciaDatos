@@ -165,7 +165,7 @@ def comercial_data(data):
     st.plotly_chart(fig, use_container_width=True)
     return None
 
-def map_density(data, map_density):
+def map_density(data, geofile):
     st.title('Descripción de región')
 
     col1, col2 = st.columns((1, 1))
