@@ -159,7 +159,7 @@ def comercial_data(data):
     st.plotly_chart(fig, use_container_width=True)
     return None
 
-def map_density(data, url):
+def map_density(data, map_density):
     st.title('Descripción de región')
 
     col1, col2 = st.columns((1, 1))
@@ -189,19 +189,22 @@ def map_density(data, url):
 ########################################################################################################################################################
     col2.header('Densidad de Precio')
     df = data[['price','zipcode']].groupby('zipcode').mean().reset_index()
-    #custom_scale = (data_aux['price'].quantile((0,0.2,0.4,0.6,0.8,1))).tolist()
+    df.columns = ['ZIP', 'PRICE']
+
+    geofile = geofile[geofile['ZIP'].isin(df['ZIP'].tolist())]
 
     region_price_map = folium.Map(location=[data['lat'].mean(),
-                                        data['long'].mean()],
-                                        default_zoom_start=15)
+                       data['long'].mean()],
+                       default_zoom_start=15)
 
-    folium.Choropleth(geo_data = url, 
-                    data = df,
-                    key_on = 'feature.properties.ZIPCODE',
-                    columns = ['zipcode', 'price'],
-                    fill_color = 'YlOrRd',
-                    highlight = True).add_to(region_price_map)
-    
+    folium.Choropleth(data = df,
+                      geo_data = geofile,
+                      columns=['ZIP', 'PRICE'],
+                      key_on = 'feature.properties.ZIP',
+                      fill_color = 'YlOrRd',
+                      fill_opacity = 0.7,
+                      line_opacity = 0.2,
+                      legend_name = 'AVG PRICE')
     
     with col2:
         folium_static(region_price_map)
@@ -255,6 +258,7 @@ if __name__ == '__main__':
     path = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/kc_house_data.csv'
     url = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/KingCountry.geojson'
     data = get_data(path)
+    geofile = get_geofile(url)
 
 ## Parametros
     data = set_feature(data)
@@ -263,7 +267,7 @@ if __name__ == '__main__':
 ## 
     comercial_data(data)
 ##
-    map_density(data, url)
+    map_density(data, geofile)
 ##
     attributes_distribution(data)
 ### Fin de Llamado de Metodos
