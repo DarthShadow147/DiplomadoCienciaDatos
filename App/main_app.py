@@ -259,21 +259,25 @@ def attributes_distribution(data):
 
 ### Fin Parametros de busqueda
 
-### Llamado de Metodos
+### Iniciacion de metodo principal, y este encapsula los metodos definidos
 if __name__ == '__main__':
+
+    ##DataSets (Archivo CSV, Archivo GeoJson)
     path = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/kc_house_data.csv'
     url = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/KingCountry.geojson'
+
+    ##Metodos para obtener datos
     data = get_data(path)
     geofile = get_geofile(url)
 
-## Parametros
+    ## Metodo para transformar datos precio / M2
     data = set_feature(data)
-## 
+    ## Metodos para obtener Analisis descriptivo y Parametros por codigo postal
     slide_data(data)
-## 
+    ## Metodo para obtener graficos de precio promedio por año, por dia y distribucion de precios, adicionalmente de nuevos filtros
     comercial_data(data)
-##
+    ## Metodo para obtener mapas de ubicacion de las casas en venta y su densidad de precio
     map_density(data, geofile)
-##
+    ## Metodo para obtener graficos de casas por habitacion, baño y No pisos, adicionalmente nuevos filtros
     attributes_distribution(data)
-### Fin de Llamado de Metodos
+### Fin de Iniciacion de metodo principal
