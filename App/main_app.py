@@ -256,8 +256,8 @@ def attributes_distribution(data):
 if __name__ == '__main__':
 
     ##DataSets (Archivo CSV, Archivo GeoJson)
-    path = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/kc_house_data.csv'
-    url = 'https://raw.githubusercontent.com/DarthShadow147/DiplomadoCienciaDatos/master/App/DataAccess/KingCountry.geojson'
+    path = 'https://raw.githubusercontent.com/DarthShadow147/DataSetDiplomado/master/DataAccess/kc_house_data.csv'
+    url = 'https://raw.githubusercontent.com/DarthShadow147/DataSetDiplomado/master/DataAccess/KingCountry.geojson'
 
     ##Metodos para obtener datos
     data = get_data(path)
