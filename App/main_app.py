@@ -164,7 +164,8 @@ def map_density(data, geofile):
     col1, col2 = st.columns((1, 1))
 
     col1.header('Portafolio de cartera')
-    df = data.sample(10)
+    #df = data.sample(10)
+    df = data.copy()
 
     ##Mapa base -- Portafolio
     density_map = folium.Map(location=[data['lat'].mean(),
@@ -196,9 +197,9 @@ def map_density(data, geofile):
                        data['long'].mean()],
                        default_zoom_start=15)
 
-    region_price_map.choropleth(data =df,
+    region_price_map.choropleth(data = df,
                                 geo_data = geofile,
-                                columns=['ZIP', 'PRICE'],
+                                columns = ['ZIP', 'PRICE'],
                                 key_on = 'feature.properties.ZIP',
                                 fill_color = 'YlOrRd',
                                 fill_opacity = 0.7,
